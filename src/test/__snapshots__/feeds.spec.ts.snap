@@ -74,7 +74,7 @@ exports[`when parse reuters valid document should return feed items 1`] = `
         {
           "label": "worldNews",
           "term": "worldNews",
-          "url": null,
+          "url": "category",
         },
       ],
       "content": null,
@@ -93,7 +93,7 @@ exports[`when parse reuters valid document should return feed items 1`] = `
         {
           "label": "worldNews",
           "term": "worldNews",
-          "url": null,
+          "url": "category",
         },
       ],
       "content": null,
@@ -112,7 +112,7 @@ exports[`when parse reuters valid document should return feed items 1`] = `
         {
           "label": "worldNews",
           "term": "worldNews",
-          "url": null,
+          "url": "category",
         },
       ],
       "content": null,
@@ -131,7 +131,7 @@ exports[`when parse reuters valid document should return feed items 1`] = `
         {
           "label": "worldNews",
           "term": "worldNews",
-          "url": null,
+          "url": "category",
         },
       ],
       "content": null,
@@ -150,7 +150,7 @@ exports[`when parse reuters valid document should return feed items 1`] = `
         {
           "label": "worldNews",
           "term": "worldNews",
-          "url": null,
+          "url": "category",
         },
       ],
       "content": null,
@@ -169,7 +169,7 @@ exports[`when parse reuters valid document should return feed items 1`] = `
         {
           "label": "worldNews",
           "term": "worldNews",
-          "url": null,
+          "url": "category",
         },
       ],
       "content": null,
@@ -188,7 +188,7 @@ exports[`when parse reuters valid document should return feed items 1`] = `
         {
           "label": "worldNews",
           "term": "worldNews",
-          "url": null,
+          "url": "category",
         },
       ],
       "content": null,
@@ -207,7 +207,7 @@ exports[`when parse reuters valid document should return feed items 1`] = `
         {
           "label": "worldNews",
           "term": "worldNews",
-          "url": null,
+          "url": "category",
         },
       ],
       "content": null,
@@ -226,7 +226,7 @@ exports[`when parse reuters valid document should return feed items 1`] = `
         {
           "label": "worldNews",
           "term": "worldNews",
-          "url": null,
+          "url": "category",
         },
       ],
       "content": null,
@@ -245,7 +245,7 @@ exports[`when parse reuters valid document should return feed items 1`] = `
         {
           "label": "worldNews",
           "term": "worldNews",
-          "url": null,
+          "url": "category",
         },
       ],
       "content": null,
