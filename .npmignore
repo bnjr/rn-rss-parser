@@ -1,0 +1,28 @@
+# Source
+src/
+
+# Tests
+coverage/
+test-rss.*
+*.spec.*
+**/__tests__/**
+**/__snapshots__/**
+
+# Configs
+tsconfig.json
+jest.config.js
+.prettierrc
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Development environment
+.idea/
+.vscode/
+.DS_Store
+
+# Build artifacts
+*.tsbuildinfo

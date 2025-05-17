@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when parse ATOM valid document should return feed items 1`] = `
+{
+  "authors": [],
+  "categories": [
+    {
+      "label": "Information",
+      "term": "Information",
+      "url": null,
+    },
+    {
+      "label": "Information",
+      "term": "Information",
+      "url": null,
+    },
+  ],
+  "copyright": null,
+  "description": "A sample ATOM feed",
+  "generator": {
+    "name": "Jekyll",
+    "url": "http://jekyllrb.com",
+    "version": "3.1.2",
+  },
+  "image": {
+    "title": null,
+    "url": "https://b.thumbs.redditmedia.com/ntr1FkBiO3nk4t4Vgy5GXoPQ_j2hirENH9iT8rXNf8M.png",
+  },
+  "items": [
+    {
+      "authors": [],
+      "categories": [
+        {
+          "label": "Information",
+          "term": "Information",
+          "url": null,
+        },
+      ],
+      "content": "<p>The chocolate chip cookie was invented by Ruth Graves Wakefield. She owned the Toll House Inn, in Whitman, Massachusetts, a very popular restaurant that featured home cooking in the 1930s. Her cookbook, Toll House Tried and True Recipes, was first published in 1936 by M. Barrows &amp; Company, New York. The 1938 edition of the cookbook was the first to include the recipe "Toll House Chocolate Crunch Cookie" which rapidly became a favorite cookie in American homes.</p>
+
+<p>Source / Read more <a href="https://en.wikipedia.org/wiki/Chocolate_chip_cookie">Wikipedia</a></p>
+    ",
+      "description": "The chocolate chip cookie was invented by Ruth Graves Wakefield.",
+      "id": "http://bakery-store.example.com/information/2016/01/02/where-did-the-cookie-come-from",
+      "image": null,
+      "media": [
+        {
+          "image": null,
+          "length": 1234,
+          "mimeType": "audio/mpeg",
+          "title": null,
+          "type": "audio",
+          "url": "https://www.example.com/audio.mp3",
+        },
+      ],
+      "published": "2016-01-01T11:00:00.000Z",
+      "title": "Where Did The Cookie Come From",
+      "updated": "2016-01-01T11:00:00.000Z",
+      "url": "http://bakery-store.example.com/information/2016/01/02/where-did-the-cookie-come-from.html",
+    },
+    {
+      "authors": [],
+      "categories": [
+        {
+          "label": "Information",
+          "term": "Information",
+          "url": null,
+        },
+      ],
+      "content": "<p>Sourdough bread is made by the fermentation of dough using naturally-occurring lactobacilli and yeast. Sourdough bread has a mildly sour taste not present in most breads made with baker's yeast and better inherent keeping qualities than other breads, due to the lactic acid produced by the lactobacilli.</p>
+
+<p>Source / Read more <a href="https://en.wikipedia.org/wiki/Sourdough">Wikipedia</a></p>
+    ",
+      "description": "Sourdough bread is made by the fermentation of dough using naturally-occurring lactobacilli and yeast. Sourdough bread has a mildly sour taste not present in most breads made with baker's yeast and better inherent keeping qualities than other breads, due to the lactic acid produced by the lactobacilli.",
+      "id": "http://bakery-store.example.com/information/2016/01/01/what-is-sour-dough",
+      "image": null,
+      "media": [],
+      "published": "2015-12-31T11:00:00.000Z",
+      "title": "What Is Sour Dough",
+      "updated": "2015-12-31T11:00:00.000Z",
+      "url": "http://bakery-store.example.com/information/2016/01/01/what-is-sour-dough.html",
+    },
+  ],
+  "language": null,
+  "meta": {
+    "type": "atom",
+    "version": "1.0",
+  },
+  "published": "2016-01-01T11:00:00.000Z",
+  "self": null,
+  "title": "ATOM title",
+  "updated": "2016-05-13T04:22:08.000Z",
+  "url": "http://bakery-store.example.com/",
+}
+`;
+
+exports[`when parse ATOM with itunes elements should return itunes information for channel and item elements 1`] = `
+{
+  "authors": [],
+  "categories": [
+    {
+      "label": "Information",
+      "term": "Information",
+      "url": null,
+    },
+    {
+      "label": "Information",
+      "term": "Information",
+      "url": null,
+    },
+  ],
+  "copyright": null,
+  "description": "A sample ATOM feed",
+  "generator": {
+    "name": "Jekyll",
+    "url": "http://jekyllrb.com",
+    "version": "3.1.2",
+  },
+  "image": null,
+  "items": [
+    {
+      "authors": [],
+      "categories": [
+        {
+          "label": "Information",
+          "term": "Information",
+          "url": null,
+        },
+      ],
+      "content": "<p>The chocolate chip cookie was invented by Ruth Graves Wakefield. She owned the Toll House Inn, in Whitman, Massachusetts, a very popular restaurant that featured home cooking in the 1930s. Her cookbook, Toll House Tried and True Recipes, was first published in 1936 by M. Barrows &amp; Company, New York. The 1938 edition of the cookbook was the first to include the recipe "Toll House Chocolate Crunch Cookie" which rapidly became a favorite cookie in American homes.</p>
+
+<p>Source / Read more <a href="https://en.wikipedia.org/wiki/Chocolate_chip_cookie">Wikipedia</a></p>
+      ",
+      "description": "The chocolate chip cookie was invented by Ruth Graves Wakefield.",
+      "id": "http://bakery-store.example.com/information/2016/01/02/where-did-the-cookie-come-from",
+      "image": null,
+      "media": [
+        {
+          "image": null,
+          "length": 1234,
+          "mimeType": "audio/mpeg",
+          "title": null,
+          "type": "audio",
+          "url": "https://www.example.com/audio.mp3",
+        },
+      ],
+      "published": "2016-01-01T11:00:00.000Z",
+      "title": "Where Did The Cookie Come From",
+      "updated": "2016-01-01T11:00:00.000Z",
+      "url": "http://bakery-store.example.com/information/2016/01/02/where-did-the-cookie-come-from.html",
+    },
+    {
+      "authors": [],
+      "categories": [
+        {
+          "label": "Information",
+          "term": "Information",
+          "url": null,
+        },
+      ],
+      "content": "<p>Sourdough bread is made by the fermentation of dough using naturally-occurring lactobacilli and yeast. Sourdough bread has a mildly sour taste not present in most breads made with baker's yeast and better inherent keeping qualities than other breads, due to the lactic acid produced by the lactobacilli.</p>
+
+<p>Source / Read more <a href="https://en.wikipedia.org/wiki/Sourdough">Wikipedia</a></p>
+      ",
+      "description": "Sourdough bread is made by the fermentation of dough using naturally-occurring lactobacilli and yeast. Sourdough bread has a mildly sour taste not present in most breads made with baker's yeast and better inherent keeping qualities than other breads, due to the lactic acid produced by the lactobacilli.",
+      "id": "http://bakery-store.example.com/information/2016/01/01/what-is-sour-dough",
+      "image": null,
+      "media": [],
+      "published": "2015-12-31T11:00:00.000Z",
+      "title": "What Is Sour Dough",
+      "updated": "2015-12-31T11:00:00.000Z",
+      "url": "http://bakery-store.example.com/information/2016/01/01/what-is-sour-dough.html",
+    },
+  ],
+  "language": null,
+  "meta": {
+    "type": "atom",
+    "version": "1.0",
+  },
+  "published": "2016-01-01T11:00:00.000Z",
+  "self": null,
+  "title": "ATOM title",
+  "updated": "2016-05-13T04:22:08.000Z",
+  "url": "http://bakery-store.example.com/",
+}
+`;

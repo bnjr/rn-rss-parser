@@ -1,0 +1,454 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when rss parse valid document should return rss items 1`] = `
+{
+  "authors": [
+    {
+      "email": null,
+      "name": "dave@userland.com",
+      "url": null,
+    },
+  ],
+  "categories": [
+    {
+      "label": "1765",
+      "term": "1765",
+      "url": null,
+    },
+  ],
+  "copyright": "Copyright 1997-2002 Dave Winer",
+  "description": "A weblog about scripting and stuff like that.",
+  "generator": {
+    "name": "Radio UserLand",
+    "url": null,
+    "version": "8.0.5",
+  },
+  "image": {
+    "title": "test image",
+    "url": "http://www.example.com/image.jpg",
+  },
+  "items": [
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "dave@userland.com",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "1765",
+          "term": "1765",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": "Monday's baseball games are on the <a href="http://www.allstarsoftware.net/homeschedule.htm">schedule</a>.",
+      "id": "http://scriptingnews.userland.com/backissues/2002/09/29#When:6:56:02PM",
+      "image": null,
+      "media": [
+        {
+          "image": null,
+          "length": 12216320,
+          "mimeType": "audio/mpeg",
+          "title": null,
+          "type": "audio",
+          "url": "http://www.scripting.com/mp3s/weatherReportSuite.mp3",
+        },
+      ],
+      "published": "2002-09-30T01:56:02.000Z",
+      "title": null,
+      "updated": "2002-09-30T01:56:02.000Z",
+      "url": null,
+    },
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "dave@userland.com",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "1765",
+          "term": "1765",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": "Josh Kirby, creator of the <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0441008690/qid=1033404393/sr=8-1/ref=sr_8_1/002-3507671-0351252?v=glance&n=507846">Discworld book covers</a>, died at age 61. What a shame, his art was one of the best reasons to read the books.",
+      "id": "http://scriptingnews.userland.com/backissues/2002/09/29#When:6:52:49PM",
+      "image": null,
+      "media": [],
+      "published": "2002-09-29T19:59:01.000Z",
+      "title": null,
+      "updated": "2002-09-29T19:59:01.000Z",
+      "url": null,
+    },
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "dave@userland.com",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "1765",
+          "term": "1765",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": "Listening to <a href="http://www.ukogbani.org/php/app.php?a=bio&b=a016">Charles McLaughlin</a> on the <a href="http://www.kpig.com/">KPIG</a> Sunday morning folk show. Very spacey. <i>"How does it feel to be loved by him?"</i>",
+      "id": "http://scriptingnews.userland.com/backissues/2002/09/29#When:3:59:56PM",
+      "image": null,
+      "media": [],
+      "published": "2002-09-29T10:59:56.000Z",
+      "title": null,
+      "updated": "2002-09-29T10:59:56.000Z",
+      "url": null,
+    },
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "dave@userland.com",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "1765",
+          "term": "1765",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": "<a href="http://espn.go.com/">ESPN</a> is running a <a href="http://espn.go.com/mlb/s/2002/0928/1439324.html">sweet article</a> about the Giants, focusing on Dusty Baker and Jeff Kent. Both may be gone next year which would be a real shame. Both are really great guys. Dusty is a hero to the community, he's always helping with cancer victims, sick kids, the homeless. If he goes a piece of San Francisco will be missing. And Jeff Kent is a man's man, a guy who <a href="http://espn.go.com/mlb/s/2002/0929/1439583.html">plays even when he's injured</a>, like he was in the 2000 playoffs. Not sure if he was injured in the 2002 division-winning game, but it wouldn't surprise me at all. (PS I'm pretty sure Kent was playing with an injury in the 9th inning yesterday.) The Bay Area press doesn't cover these guys as the heroes they are. The injuries are all part of the baseball ethos that fans don't hear about much.",
+      "id": "http://scriptingnews.userland.com/backissues/2002/09/29#When:3:09:21PM",
+      "image": null,
+      "media": [],
+      "published": "2002-09-29T21:56:02.000Z",
+      "title": null,
+      "updated": "2002-09-29T21:56:02.000Z",
+      "url": null,
+    },
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "dave@userland.com",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "1765",
+          "term": "1765",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": "<a href="http://www.thetwowayweb.com/paymentSystems">Payment systems</a> are on-topic.",
+      "id": "http://scriptingnews.userland.com/backissues/2002/09/29#When:6:47:44AM",
+      "image": null,
+      "media": [],
+      "published": "2002-09-29T13:47:44.000Z",
+      "title": null,
+      "updated": "2002-09-29T13:47:44.000Z",
+      "url": null,
+    },
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "dave@userland.com",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "1765",
+          "term": "1765",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": "BTW, for those who were scared for me last night, thanks for your concern. I'm fine.",
+      "id": "http://scriptingnews.userland.com/backissues/2002/09/29#When:6:47:05AM",
+      "image": null,
+      "media": [],
+      "published": "2002-09-29T13:47:05.000Z",
+      "title": null,
+      "updated": "2002-09-29T13:47:05.000Z",
+      "url": null,
+    },
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "dave@userland.com",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "1765",
+          "term": "1765",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": "If you use a centralized identity system, I can use the identity information in ways you can't control. For example, I can associate the name "Bob Smith" with a weblog that says something critical about someone named Bob Smith. Then when Bob searches for his name using Google, the criticism comes up as a hit. Then consider the case where I know 10 people named "Bob Smith" so I do this 10 times. In all cases I gather the information from a centralized identity system, and from search engines. Bottom-line <a href="http://www.gotfuturama.com/Multimedia/Sounds/Bender/arrogant.wav">humans should not trust computers</a> to keep information about them in confidence, it's always available for exploitation in ways you can't control.",
+      "id": "http://scriptingnews.userland.com/backissues/2002/09/29#When:6:40:49AM",
+      "image": null,
+      "media": [],
+      "published": "2002-09-29T13:40:49.000Z",
+      "title": null,
+      "updated": "2002-09-29T13:40:49.000Z",
+      "url": null,
+    },
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "dave@userland.com",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "1765",
+          "term": "1765",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": "<a href="http://icfcst.kiev.ua/panorama/siege.html">Siege</a> is a puzzle game that's unique, clever, and works in most browsers.",
+      "id": "http://scriptingnews.userland.com/backissues/2002/09/29#When:4:07:57AM",
+      "image": null,
+      "media": [],
+      "published": "2002-09-29T11:07:57.000Z",
+      "title": null,
+      "updated": "2002-09-29T11:07:57.000Z",
+      "url": null,
+    },
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "dave@userland.com",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "1765",
+          "term": "1765",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": "Rick Smolan, the creator of A Day in the Life of America is <a href="http://www.efn.org/~hkrieger/s017.htm">working on a new project</a>. <i>"Hello, I'm working with National Geographic, Kodak and the Turkish Tourist Bureau on a large-scale Internet photography project and I would like to speak with you about it."</i>",
+      "id": "http://scriptingnews.userland.com/backissues/2002/09/29#When:3:50:18AM",
+      "image": null,
+      "media": [],
+      "published": "2002-09-29T10:50:18.000Z",
+      "title": null,
+      "updated": "2002-09-29T10:50:18.000Z",
+      "url": null,
+    },
+  ],
+  "language": "en-us",
+  "meta": {
+    "type": "rss",
+    "version": "2.0",
+  },
+  "published": "2002-09-30T01:56:02.000Z",
+  "self": null,
+  "title": "Scripting News",
+  "updated": "2002-09-30T11:00:00.000Z",
+  "url": "http://www.scripting.com/",
+}
+`;
+
+exports[`when rss parse with itunes elements should return itunes information for channel and item elements 1`] = `
+{
+  "authors": [
+    {
+      "email": null,
+      "name": "John Doe",
+      "url": null,
+    },
+  ],
+  "categories": [
+    {
+      "label": "Technology",
+      "term": "Technology",
+      "url": null,
+    },
+    {
+      "label": "TV & Film",
+      "term": "TV & Film",
+      "url": null,
+    },
+    {
+      "label": "Arts",
+      "term": "Arts",
+      "url": null,
+    },
+  ],
+  "copyright": "℗ & © 2014 John Doe & Family",
+  "description": "All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our podcast in the Podcasts app or in the iTunes Store",
+  "generator": null,
+  "image": null,
+  "items": [
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "John Doe",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "Technology",
+          "term": "Technology",
+          "url": null,
+        },
+        {
+          "label": "TV & Film",
+          "term": "TV & Film",
+          "url": null,
+        },
+        {
+          "label": "Arts",
+          "term": "Arts",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": null,
+      "id": "http://example.com/podcasts/archive/aae20140615.m4a",
+      "image": null,
+      "media": [
+        {
+          "image": null,
+          "length": 8727310,
+          "mimeType": "audio/x-m4a",
+          "title": null,
+          "type": "audio",
+          "url": "http://example.com/podcasts/everything/AllAboutEverythingEpisode3.m4a",
+        },
+      ],
+      "published": "2016-03-08T12:00:00.000Z",
+      "title": "Socket Wrench Shootout",
+      "updated": "2016-03-08T12:00:00.000Z",
+      "url": null,
+    },
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "John Doe",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "Technology",
+          "term": "Technology",
+          "url": null,
+        },
+        {
+          "label": "TV & Film",
+          "term": "TV & Film",
+          "url": null,
+        },
+        {
+          "label": "Arts",
+          "term": "Arts",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": null,
+      "id": "http://example.com/podcasts/archive/aae20140608.mp3",
+      "image": null,
+      "media": [
+        {
+          "image": null,
+          "length": 5650889,
+          "mimeType": "audio/mpeg",
+          "title": null,
+          "type": "audio",
+          "url": "http://example.com/podcasts/everything/AllAboutEverythingEpisode2.mp3",
+        },
+      ],
+      "published": "2016-03-09T18:00:00.000Z",
+      "title": "Maple Syrup",
+      "updated": "2016-03-09T18:00:00.000Z",
+      "url": null,
+    },
+    {
+      "authors": [
+        {
+          "email": null,
+          "name": "John Doe",
+          "url": null,
+        },
+      ],
+      "categories": [
+        {
+          "label": "Technology",
+          "term": "Technology",
+          "url": null,
+        },
+        {
+          "label": "TV & Film",
+          "term": "TV & Film",
+          "url": null,
+        },
+        {
+          "label": "Arts",
+          "term": "Arts",
+          "url": null,
+        },
+      ],
+      "content": null,
+      "description": null,
+      "id": "http://example.com/podcasts/archive/aae20140697.mp3",
+      "image": null,
+      "media": [
+        {
+          "image": null,
+          "length": 5650889,
+          "mimeType": "audio/mpeg",
+          "title": null,
+          "type": "audio",
+          "url": "http://example.com/podcasts/everything/AllAboutEverythingEpisode3.mp3",
+        },
+      ],
+      "published": "2016-03-10T18:00:00.000Z",
+      "title": "Red Leicester",
+      "updated": "2016-03-10T18:00:00.000Z",
+      "url": null,
+    },
+  ],
+  "language": "en-us",
+  "meta": {
+    "type": "rss",
+    "version": "2.0",
+  },
+  "published": "2016-03-08T12:00:00.000Z",
+  "self": null,
+  "title": "All About Everything",
+  "updated": null,
+  "url": "http://www.example.com/podcasts/everything/index.html",
+}
+`;
