@@ -1,7 +1,13 @@
 import { BaseFeed } from './base-feed';
-import { FeedAuthor, FeedCategory, FeedGenerator, FeedImage, FeedMeta } from '../types';
+import { FeedAuthor, FeedCategory, FeedGenerator, FeedImage } from '../types';
 import { FeedItem } from './feed-item';
 import { RssFeedItem } from './rss-feed-item';
+import {
+  findElementContent,
+  findElementContentNS,
+  getElementContentFromParent,
+  parseAuthor,
+} from '../utils/dom-utils';
 
 const httpRegExp = /^https?:\/\//i;
 
@@ -32,40 +38,40 @@ export class Rss2Feed extends BaseFeed {
    * @returns {string | null}
    *     Returns the feed language.
    */
-  override get language(): string | null {
-    return this.findElementContent('language') || super.language;
+  get language(): string | null {
+    return findElementContent(this.channelElement, 'language') || null;
   }
 
   /**
    * @returns {string | null}
    *     Returns the feed title.
    */
-  override get title(): string | null {
-    return this.findElementContent('title') || super.title;
+  get title(): string | null {
+    return findElementContent(this.channelElement, 'title') || null;
   }
 
   /**
    * @returns {string | null}
    *     Returns the feed description.
    */
-  override get description(): string | null {
-    return this.findElementContent('description') || super.description;
+  get description(): string | null {
+    return findElementContent(this.channelElement, 'description') || null;
   }
 
   /**
    * @returns {string | null}
    *     Returns the feed copyright.
    */
-  override get copyright(): string | null {
-    return this.findElementContent('copyright') || super.copyright;
+  get copyright(): string | null {
+    return findElementContent(this.channelElement, 'copyright') || null;
   }
 
   /**
    * @returns {string | null}
    *     Returns the feed URL.
    */
-  override get url(): string | null {
-    return this.findElementContent('link') || super.url;
+  get url(): string | null {
+    return findElementContent(this.channelElement, 'link') || null;
   }
 
   /**
@@ -73,25 +79,27 @@ export class Rss2Feed extends BaseFeed {
    *     Returns the date that the feed was published on.
    */
   override get published(): Date | null {
-    const pubDate = this.findElementContent('pubDate');
+    const pubDate = findElementContent(this.channelElement, 'pubDate');
     if (pubDate) {
       try {
         return new Date(pubDate);
-      } catch (_) {
+      } catch {
         // Invalid date format, use parent implementation
       }
     }
-
-    const dcDate = this.findElementContentNS('http://purl.org/dc/elements/1.1/', 'date');
+    const dcDate = findElementContentNS(
+      this.channelElement,
+      'http://purl.org/dc/elements/1.1/',
+      'date',
+    );
     if (dcDate) {
       try {
         return new Date(dcDate);
-      } catch (_) {
+      } catch {
         // Invalid date format, use parent implementation
       }
     }
-
-    return super.published;
+    return null;
   }
 
   /**
@@ -99,15 +107,15 @@ export class Rss2Feed extends BaseFeed {
    *     Returns the date that the feed was last updated on.
    */
   override get updated(): Date | null {
-    const lastBuildDate = this.findElementContent('lastBuildDate');
+    const lastBuildDate = findElementContent(this.channelElement, 'lastBuildDate');
     if (lastBuildDate) {
       try {
         return new Date(lastBuildDate);
-      } catch (_) {
+      } catch {
         // Invalid date format, use parent implementation
       }
     }
-    return super.updated;
+    return null;
   }
 
   /**
@@ -115,9 +123,9 @@ export class Rss2Feed extends BaseFeed {
    *     Returns information about the software that generated the feed.
    */
   override get generator(): FeedGenerator | null {
-    const generator = this.findElementContent('generator');
+    const generator = findElementContent(this.channelElement, 'generator');
     if (!generator) {
-      return super.generator;
+      return null;
     }
 
     // Attempt to parse the generator string
@@ -143,18 +151,18 @@ export class Rss2Feed extends BaseFeed {
    * @returns {FeedImage | null}
    *     Returns an image representing the feed.
    */
-  override get image(): FeedImage | null {
+  get image(): FeedImage | null {
     const imageElement = this.channelElement.getElementsByTagName('image')[0];
     if (!imageElement) {
-      return super.image;
+      return null;
     }
 
-    const url = this.getElementContentFromParent(imageElement, 'url');
+    const url = getElementContentFromParent(imageElement, 'url');
     if (!url) {
-      return super.image;
+      return null;
     }
 
-    const title = this.getElementContentFromParent(imageElement, 'title');
+    const title = getElementContentFromParent(imageElement, 'title');
 
     return {
       url,
@@ -170,19 +178,24 @@ export class Rss2Feed extends BaseFeed {
     const authors = [];
 
     // Check for DC creator first
-    const dcCreator = this.findElementContentNS('http://purl.org/dc/elements/1.1/', 'creator');
+    const dcCreator = findElementContentNS(
+      this.channelElement,
+      'http://purl.org/dc/elements/1.1/',
+      'creator',
+    );
     if (dcCreator) {
-      authors.push(this.parseAuthor(dcCreator));
+      authors.push(parseAuthor(dcCreator));
     }
 
     // Check for managingEditor
-    const managingEditor = this.findElementContent('managingEditor');
+    const managingEditor = findElementContent(this.channelElement, 'managingEditor');
     if (managingEditor) {
-      authors.push(this.parseAuthor(managingEditor));
+      authors.push(parseAuthor(managingEditor));
     }
 
     // Check for iTunes author
-    const itunesAuthor = this.findElementContentNS(
+    const itunesAuthor = findElementContentNS(
+      this.channelElement,
       'http://www.itunes.com/dtds/podcast-1.0.dtd',
       'author',
     );
@@ -194,7 +207,7 @@ export class Rss2Feed extends BaseFeed {
       });
     }
 
-    return authors.length > 0 ? authors : super.authors;
+    return authors.length > 0 ? authors : [];
   }
 
   /**
@@ -272,36 +285,14 @@ export class Rss2Feed extends BaseFeed {
     return items;
   }
 
-  // Utility methods
-  private findElementContent(tagName: string): string | null {
-    const element = this.channelElement.getElementsByTagName(tagName)[0];
-    return element ? element.textContent || null : null;
+  // Implement abstract members from BaseFeed
+  get id(): string | null {
+    // RSS 2.0 does not have a standard feed ID, so return the URL if available
+    return this.url;
   }
 
-  private findElementContentNS(namespace: string, localName: string): string | null {
-    const element = this.channelElement.getElementsByTagNameNS(namespace, localName)[0];
-    return element ? element.textContent || null : null;
-  }
-
-  private getElementContentFromParent(parent: Element, tagName: string): string | null {
-    const element = parent.getElementsByTagName(tagName)[0];
-    return element ? element.textContent || null : null;
-  }
-
-  private parseAuthor(text: string): FeedAuthor {
-    // Simple parsing of author format "name <email>"
-    const match = text.match(/^([^<]+)\s*<([^>]+)>/);
-    if (match) {
-      return {
-        name: match[1].trim(),
-        email: match[2].trim(),
-        url: null,
-      };
-    }
-    return {
-      name: text,
-      email: null,
-      url: null,
-    };
+  get self(): string | null {
+    // RSS 2.0 does not have a standard self link, so return null
+    return null;
   }
 }
