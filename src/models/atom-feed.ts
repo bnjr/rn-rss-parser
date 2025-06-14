@@ -1,5 +1,5 @@
 import { BaseFeed } from './base-feed';
-import { FeedAuthor, FeedCategory, FeedGenerator, FeedImage, FeedMeta } from '../types';
+import { FeedAuthor, FeedCategory, FeedGenerator } from '../types';
 import { FeedItem } from './feed-item';
 import { AtomFeedItem } from './atom-feed-item';
 
@@ -39,7 +39,7 @@ export class AtomFeed extends BaseFeed {
    */
   override get language(): string | null {
     const lang = this.feedElement.getAttribute('xml:lang') || this.feedElement.getAttribute('lang');
-    return lang || super.language;
+    return lang || null;
   }
 
   /**
@@ -47,7 +47,7 @@ export class AtomFeed extends BaseFeed {
    *     Returns the feed title.
    */
   override get title(): string | null {
-    return this.findElementContent('title') || super.title;
+    return this.findElementContent('title') || null;
   }
 
   /**
@@ -55,7 +55,7 @@ export class AtomFeed extends BaseFeed {
    *     Returns the feed description.
    */
   override get description(): string | null {
-    return this.findElementContent('subtitle') || super.description;
+    return this.findElementContent('subtitle') || null;
   }
 
   /**
@@ -63,7 +63,7 @@ export class AtomFeed extends BaseFeed {
    *     Returns the feed copyright.
    */
   override get copyright(): string | null {
-    return this.findElementContent('rights') || super.copyright;
+    return this.findElementContent('rights') || null;
   }
 
   /**
@@ -73,7 +73,7 @@ export class AtomFeed extends BaseFeed {
   override get url(): string | null {
     const links = Array.from(this.feedElement.getElementsByTagName('link'));
     if (links.length === 0) {
-      return super.url;
+      return null;
     }
 
     // First try to find an alternate link
@@ -90,7 +90,7 @@ export class AtomFeed extends BaseFeed {
       return href || null;
     }
 
-    return super.url;
+    return null;
   }
 
   /**
@@ -104,7 +104,7 @@ export class AtomFeed extends BaseFeed {
       const href = selfLink.getAttribute('href');
       return href || null;
     }
-    return super.self;
+    return null;
   }
 
   /**
@@ -117,7 +117,7 @@ export class AtomFeed extends BaseFeed {
     if (publishedDate) {
       try {
         return new Date(publishedDate);
-      } catch (_) {
+      } catch {
         // Invalid date format, try next
       }
     }
@@ -127,12 +127,12 @@ export class AtomFeed extends BaseFeed {
     if (issuedDate) {
       try {
         return new Date(issuedDate);
-      } catch (_) {
+      } catch {
         // Invalid date format, try next
       }
     }
 
-    return super.published;
+    return null;
   }
 
   /**
@@ -145,7 +145,7 @@ export class AtomFeed extends BaseFeed {
     if (updatedDate) {
       try {
         return new Date(updatedDate);
-      } catch (_) {
+      } catch {
         // Invalid date format, try next
       }
     }
@@ -155,12 +155,12 @@ export class AtomFeed extends BaseFeed {
     if (modifiedDate) {
       try {
         return new Date(modifiedDate);
-      } catch (_) {
+      } catch {
         // Invalid date format, try next
       }
     }
 
-    return super.updated;
+    return null;
   }
 
   /**
@@ -170,7 +170,7 @@ export class AtomFeed extends BaseFeed {
   override get generator(): FeedGenerator | null {
     const generator = this.feedElement.getElementsByTagName('generator')[0];
     if (!generator) {
-      return super.generator;
+      return null;
     }
 
     const name = generator.textContent || '';
@@ -178,7 +178,7 @@ export class AtomFeed extends BaseFeed {
     const url = generator.getAttribute('uri');
 
     if (!name) {
-      return super.generator;
+      return null;
     }
 
     return {
@@ -186,32 +186,6 @@ export class AtomFeed extends BaseFeed {
       version: version || null,
       url: url || null,
     };
-  }
-
-  /**
-   * @returns {FeedImage | null}
-   *     Returns an image representing the feed.
-   */
-  override get image(): FeedImage | null {
-    // Look for logo (Atom 1.0)
-    const logo = this.findElementContent('logo');
-    if (logo) {
-      return {
-        url: logo,
-        title: null,
-      };
-    }
-
-    // Look for icon (smaller but could be used as fallback)
-    const icon = this.findElementContent('icon');
-    if (icon) {
-      return {
-        url: icon,
-        title: null,
-      };
-    }
-
-    return super.image;
   }
 
   /**
@@ -238,7 +212,7 @@ export class AtomFeed extends BaseFeed {
       })
       .filter((item): item is FeedAuthor => item !== null);
 
-    return authors.length > 0 ? authors : super.authors;
+    return authors.length > 0 ? authors : [];
   }
 
   /**
@@ -264,7 +238,7 @@ export class AtomFeed extends BaseFeed {
       })
       .filter((item): item is FeedCategory => item !== null);
 
-    return categories.length > 0 ? categories : super.categories;
+    return categories.length > 0 ? categories : [];
   }
 
   /**
@@ -288,6 +262,15 @@ export class AtomFeed extends BaseFeed {
 
     this.cachedItems = items;
     return items;
+  }
+
+  /**
+   * @returns {string | null}
+   *     Returns the feed unique identifier.
+   */
+  override get id(): string | null {
+    // Atom feeds typically use the <id> element as the unique identifier
+    return this.findElementContent('id') || null;
   }
 
   // Utility methods

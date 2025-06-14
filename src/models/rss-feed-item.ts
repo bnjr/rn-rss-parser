@@ -1,6 +1,7 @@
-import { FeedAuthor, FeedCategory, FeedImage, FeedItemMedia } from '../types';
+import { FeedAuthor, FeedCategory, FeedItemMedia } from '../types';
 import { FeedItem } from './feed-item';
 import { BaseFeed } from './base-feed';
+import { findElementContent, findElementContentNS, parseAuthor } from '../utils/dom-utils';
 
 const httpRegExp = /^https?:\/\//i;
 
@@ -28,8 +29,8 @@ export class RssFeedItem extends FeedItem {
    *     Returns the feed item unique identifier.
    */
   override get id(): string | null {
-    const guidElement = this.findElementContent('guid');
-    return guidElement || super.id;
+    const guidElement = findElementContent(this.itemElement, 'guid');
+    return guidElement || this.feed.id;
   }
 
   /**
@@ -37,7 +38,7 @@ export class RssFeedItem extends FeedItem {
    *     Returns the feed item title.
    */
   override get title(): string | null {
-    return this.findElementContent('title') || super.title;
+    return findElementContent(this.itemElement, 'title') || this.feed.title;
   }
 
   /**
@@ -45,7 +46,7 @@ export class RssFeedItem extends FeedItem {
    *     Returns the feed item description.
    */
   override get description(): string | null {
-    return this.findElementContent('description') || super.description;
+    return findElementContent(this.itemElement, 'description') || this.feed.description;
   }
 
   /**
@@ -53,9 +54,9 @@ export class RssFeedItem extends FeedItem {
    *     Returns the feed item URL.
    */
   override get url(): string | null {
-    const link = this.findElementContent('link');
+    const link = findElementContent(this.itemElement, 'link');
     if (!link) {
-      return super.url;
+      return this.feed.url;
     }
     return link;
   }
@@ -65,15 +66,15 @@ export class RssFeedItem extends FeedItem {
    *     Returns the date that the feed item was published on.
    */
   override get published(): Date | null {
-    const pubDate = this.findElementContent('pubDate');
+    const pubDate = findElementContent(this.itemElement, 'pubDate');
     if (pubDate) {
       try {
         return new Date(pubDate);
-      } catch (_) {
+      } catch {
         // Invalid date format, continue
       }
     }
-    return super.published;
+    return null;
   }
 
   /**
@@ -81,16 +82,14 @@ export class RssFeedItem extends FeedItem {
    *     Returns the date that the feed item was last updated on.
    */
   override get updated(): Date | null {
-    // Try different date fields in order of preference
-    const lastModified = this.findElementContent('lastModified');
+    const lastModified = findElementContent(this.itemElement, 'lastModified');
     if (lastModified) {
       try {
         return new Date(lastModified);
-      } catch (_) {
+      } catch {
         // Invalid date format, continue
       }
     }
-
     return this.published;
   }
 
@@ -99,99 +98,15 @@ export class RssFeedItem extends FeedItem {
    *     Returns the feed item content.
    */
   override get content(): string | null {
-    const contentEncoded = this.findElementContentNS(
+    const contentEncoded = findElementContentNS(
+      this.itemElement,
       'http://purl.org/rss/1.0/modules/content/',
       'encoded',
     );
     if (contentEncoded) {
       return contentEncoded;
     }
-    return super.content;
-  }
-
-  /**
-   * @returns {FeedImage | null}
-   *     Returns an image representing the feed item.
-   */
-  override get image(): FeedImage | null {
-    // Try to find an image from various sources
-    const images = Array.from(this.itemElement.getElementsByTagName('image')).filter(
-      (img) => !this.hasNamespace(img, 'itunes'),
-    );
-
-    const itunesImage = Array.from(this.itemElement.getElementsByTagName('image')).find((img) =>
-      this.hasNamespace(img, 'itunes'),
-    );
-
-    let title: string | null = null;
-    let url: string | null = null;
-    let width: number | undefined = undefined;
-    let height: number | undefined = undefined;
-
-    // Try a regular image first
-    if (images.length > 0) {
-      title = this.getElementContentFromParent(images[0], 'title');
-      url = this.getElementContentFromParent(images[0], 'url');
-    }
-
-    // If that fails, check for an itunes image
-    if (!url && itunesImage) {
-      url = itunesImage.getAttribute('href') || null;
-    }
-
-    // If that fails, check for the first media image
-    const mediaImage = this.mediaImages[0];
-    if (!url && mediaImage) {
-      return {
-        url: mediaImage.url,
-        title: mediaImage.title,
-        width: mediaImage.width,
-        height: mediaImage.height,
-      };
-    }
-
-    // Get any media thumbnail
-    const thumbnails = this.media.filter((item) => item.image);
-    if (!url && thumbnails.length > 0 && thumbnails[0].image) {
-      return {
-        url: thumbnails[0].image,
-        title: thumbnails[0].title,
-        width: thumbnails[0].width,
-        height: thumbnails[0].height,
-      };
-    }
-
-    // Check for media:thumbnail and extract width/height
-    const mediaThumbs = Array.from(this.itemElement.getElementsByTagName('media:thumbnail'));
-    if (!url && mediaThumbs.length > 0) {
-      const thumbUrl = mediaThumbs[0].getAttribute('url');
-      if (thumbUrl) {
-        width = mediaThumbs[0].getAttribute('width')
-          ? parseInt(mediaThumbs[0].getAttribute('width')!, 10)
-          : undefined;
-        height = mediaThumbs[0].getAttribute('height')
-          ? parseInt(mediaThumbs[0].getAttribute('height')!, 10)
-          : undefined;
-        return {
-          url: thumbUrl,
-          title: null,
-          width,
-          height,
-        };
-      }
-    }
-
-    // If we found a valid image URL from any source
-    if (url) {
-      return {
-        url,
-        title,
-        width,
-        height,
-      };
-    }
-
-    return super.image;
+    return null;
   }
 
   /**
@@ -205,17 +120,12 @@ export class RssFeedItem extends FeedItem {
         if (!url) {
           return null;
         }
-
         const lengthAttr = enclosure.getAttribute('length');
         const length = lengthAttr ? parseInt(lengthAttr, 10) : null;
-
         const mimeType = enclosure.getAttribute('type')?.toLowerCase() || null;
         const type = typeof mimeType === 'string' ? mimeType.split('/')[0] : null;
-
         const image = type === 'image' ? url : null;
-        // Try to get a title attribute if present, else null
         const title = enclosure.getAttribute('title') || null;
-
         return {
           url,
           image,
@@ -317,12 +227,14 @@ export class RssFeedItem extends FeedItem {
    *     Returns the feed item authors.
    */
   override get authors(): FeedAuthor[] {
-    // Try dc:creator (Dublin Core)
-    const dcCreator = this.findElementContentNS('http://purl.org/dc/elements/1.1/', 'creator');
+    const dcCreator = findElementContentNS(
+      this.itemElement,
+      'http://purl.org/dc/elements/1.1/',
+      'creator',
+    );
     if (dcCreator) {
-      return [this.parseAuthor(dcCreator)];
+      return [parseAuthor(dcCreator)];
     }
-    // Fallback to feed authors
     return this.feed.authors;
   }
 
@@ -331,7 +243,6 @@ export class RssFeedItem extends FeedItem {
    *     Returns the feed item categories.
    */
   override get categories(): FeedCategory[] {
-    // Standard RSS <category> tags
     const categories = Array.from(this.itemElement.getElementsByTagName('category'))
       .map((category) => {
         const term = category.textContent || '';
@@ -346,44 +257,5 @@ export class RssFeedItem extends FeedItem {
       })
       .filter((item): item is FeedCategory => item !== null);
     return categories.length > 0 ? categories : this.feed.categories;
-  }
-
-  private parseAuthor(text: string): FeedAuthor {
-    // Simple parsing of author format "name <email>"
-    const match = text.match(/^([^<]+)\s*<([^>]+)>/);
-    if (match) {
-      return {
-        name: match[1].trim(),
-        email: match[2].trim(),
-        url: null,
-      };
-    }
-    return {
-      name: text,
-      email: null,
-      url: null,
-    };
-  }
-
-  private findElementContent(tagName: string): string | null {
-    const element = this.itemElement.getElementsByTagName(tagName)[0];
-    return element ? element.textContent || null : null;
-  }
-
-  private findElementContentNS(namespace: string, localName: string): string | null {
-    const element = this.itemElement.getElementsByTagNameNS(namespace, localName)[0];
-    return element ? element.textContent || null : null;
-  }
-
-  private getElementContentFromParent(parent: Element, tagName: string): string | null {
-    const element = parent.getElementsByTagName(tagName)[0];
-    return element ? element.textContent || null : null;
-  }
-
-  private hasNamespace(element: Element, namespace: string): boolean {
-    return (
-      element.namespaceURI === 'http://www.itunes.com/dtds/podcast-1.0.dtd' ||
-      element.prefix === namespace
-    );
   }
 }

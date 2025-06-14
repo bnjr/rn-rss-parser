@@ -1,18 +1,15 @@
-import { FeedAuthor, FeedCategory, FeedGenerator, FeedImage, FeedMeta } from '../types';
+import { FeedAuthor, FeedCategory, FeedGenerator, FeedMeta } from '../types';
 import { FeedItem } from './feed-item';
 
 /**
- * Base class representing a feed.
+ * Abstract class representing a generic feed (RSS or Atom).
  */
 export abstract class BaseFeed {
   /**
-   * @type {FeedMeta}
+   * Meta information about the feed, such as type and version.
    */
   protected meta: FeedMeta;
 
-  /**
-   * Class constructor.
-   */
   constructor() {
     this.meta = {
       type: 'rss',
@@ -20,129 +17,44 @@ export abstract class BaseFeed {
     };
   }
 
-  /**
-   * @returns {string | null}
-   *     Returns the feed language.
-   */
-  get language(): string | null {
-    return null;
+  get type(): 'rss' | 'atom' {
+    return this.meta.type;
   }
 
-  /**
-   * @returns {string | null}
-   *     Returns the feed title.
-   */
-  get title(): string | null {
-    return null;
+  get version(): string | null {
+    return this.meta.version;
   }
 
-  /**
-   * @returns {string | null}
-   *     Returns the feed description.
-   */
-  get description(): string | null {
-    return null;
-  }
+  abstract get id(): string | null;
+  abstract get title(): string | null;
+  abstract get description(): string | null; // RSS: description, Atom: subtitle
+  abstract get url(): string | null; // RSS: link, Atom: link rel="alternate"
+  abstract get self(): string | null; // Atom: link rel="self"
+  abstract get language(): string | null; // RSS: language, Atom: xml:lang
+  abstract get copyright(): string | null;
+  abstract get published(): Date | null;
+  abstract get updated(): Date | null;
+  abstract get generator(): FeedGenerator | null;
+  abstract get authors(): FeedAuthor[];
+  abstract get categories(): FeedCategory[];
+  abstract get items(): FeedItem[];
 
   /**
-   * @returns {string | null}
-   *     Returns the feed copyright.
-   */
-  get copyright(): string | null {
-    return null;
-  }
-
-  /**
-   * @returns {string | null}
-   *     Returns the feed URL.
-   */
-  get url(): string | null {
-    return null;
-  }
-
-  /**
-   * @returns {string | null}
-   *     Returns the feed self URL.
-   */
-  get self(): string | null {
-    return null;
-  }
-
-  /**
-   * @returns {Date | null}
-   *     Returns the date that the feed was published on.
-   */
-  get published(): Date | null {
-    return null;
-  }
-
-  /**
-   * @returns {Date | null}
-   *     Returns the date that the feed was last updated on.
-   */
-  get updated(): Date | null {
-    return null;
-  }
-
-  /**
-   * @returns {FeedGenerator | null}
-   *     Returns information about the software that generated the feed.
-   */
-  get generator(): FeedGenerator | null {
-    return null;
-  }
-
-  /**
-   * @returns {FeedImage | null}
-   *     Returns an image representing the feed.
-   */
-  get image(): FeedImage | null {
-    return null;
-  }
-
-  /**
-   * @returns {Array<FeedAuthor>}
-   *     Returns the authors of the feed.
-   */
-  get authors(): FeedAuthor[] {
-    return [];
-  }
-
-  /**
-   * @returns {Array<FeedCategory>}
-   *     Returns the categories the feed belongs to.
-   */
-  get categories(): FeedCategory[] {
-    return [];
-  }
-
-  /**
-   * @returns {Array<FeedItem>}
-   *     Returns all content items in the feed.
-   */
-  get items(): FeedItem[] {
-    return [];
-  }
-
-  /**
-   * Get a JSON representation of the feed.
-   *
-   * @returns {object}
-   *     Returns a JSON representation of the feed.
+   * Serializes the feed to a JSON-compatible format.
    */
   toJSON(): object {
     return {
       meta: this.meta,
-      language: this.language,
+      id: this.id,
       title: this.title,
       description: this.description,
-      copyright: this.copyright,
       url: this.url,
       self: this.self,
+      language: this.language,
+      copyright: this.copyright,
       published: this.published ? this.published.toISOString() : null,
       updated: this.updated ? this.updated.toISOString() : null,
       generator: this.generator,
-      image: this.image,
       authors: this.authors,
       categories: this.categories,
       items: this.items.map((item) => item.toJSON()),

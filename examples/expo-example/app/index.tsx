@@ -10,14 +10,16 @@ import {
   Button,
 } from 'react-native';
 import { parseFeed, BaseFeed } from 'rn-rss-parser';
+import * as RNRssParser from 'react-native-rss-parser';
 
 export default function Index() {
-  const [feed, setFeed] = useState<BaseFeed | null>(null);
+  const [feed, setFeed] = useState<BaseFeed | RNRssParser.Feed | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
-  const [feedUrl, setFeedUrl] = useState('https://hnrss.org/frontpage');
+  const [feedUrl, setFeedUrl] = useState('https://feeds.bbci.co.uk/news/rss.xml');
   const [inputUrl, setInputUrl] = useState(feedUrl);
+  const [parserType, setParserType] = useState<'inbuilt' | 'package'>('inbuilt');
 
   const fetchFeed = async (url: string) => {
     setLoading(true);
@@ -26,7 +28,12 @@ export default function Index() {
     try {
       const response = await fetch(url);
       const responseText = await response.text();
-      const rssFeed = parseFeed(responseText);
+      let rssFeed;
+      if (parserType === 'inbuilt') {
+        rssFeed = parseFeed(responseText);
+      } else {
+        rssFeed = await RNRssParser.parse(responseText);
+      }
       setFeed(rssFeed);
       setFeedUrl(url);
     } catch (err) {
@@ -40,7 +47,7 @@ export default function Index() {
   useEffect(() => {
     fetchFeed(feedUrl);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [parserType]);
 
   if (loading) {
     return (
@@ -64,6 +71,25 @@ export default function Index() {
 
   return (
     <View style={{ flex: 1, flexDirection: 'column' }}>
+      {/* Parser Switcher */}
+      <View style={styles.parserSwitcherRow}>
+        <TouchableOpacity
+          style={[styles.parserButton, parserType === 'inbuilt' && styles.selectedParserButton]}
+          onPress={() => setParserType('inbuilt')}
+        >
+          <Text style={parserType === 'inbuilt' ? styles.selectedParserText : styles.parserText}>
+            In-built Parser
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.parserButton, parserType === 'package' && styles.selectedParserButton]}
+          onPress={() => setParserType('package')}
+        >
+          <Text style={parserType === 'package' ? styles.selectedParserText : styles.parserText}>
+            react-native-rss-parser
+          </Text>
+        </TouchableOpacity>
+      </View>
       {/* Feed URL input */}
       <View style={styles.inputRow}>
         <TextInput
@@ -92,7 +118,7 @@ export default function Index() {
             >
               <Text style={styles.itemTitle}>{item.title}</Text>
               <Text numberOfLines={1} style={styles.itemUrl}>
-                {item.url}
+                {item.id}
               </Text>
             </TouchableOpacity>
           ))}
@@ -191,5 +217,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginRight: 8,
     backgroundColor: '#fff',
+  },
+  parserSwitcherRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    backgroundColor: '#f0f4f8',
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
+  },
+  parserButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginHorizontal: 4,
+    borderRadius: 6,
+    backgroundColor: '#e0e7ef',
+  },
+  selectedParserButton: {
+    backgroundColor: '#007aff',
+  },
+  parserText: {
+    color: '#333',
+    fontWeight: 'bold',
+  },
+  selectedParserText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
